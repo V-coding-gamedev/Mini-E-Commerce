@@ -26,8 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.web.bind.annotation.RequestParam;
 
-
+@RestController 
 public class LoginController {
     
     @Autowired
@@ -35,34 +36,36 @@ public class LoginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    
-    @GetMapping("/hello")
-    public String sayHello(){
-        return "Hello";
-    }
 
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public String userEndpoint(){
         return "Hello, User!";
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin")
-    public String adminEndpoint(){
-        return "Hello, Admin!";
-    }
     
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+//    @GetMapping("/log-in")
+//    public String login(){
+//        return "login.html"; 
+//    }
+    
+    
+    
+    @PostMapping("/log-in")
+    public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
         Authentication authentication;
         try {
+            // Luồng xác thực: AuthenticationManager gọi DaoAuthenticationProvider, 
+            // provider dùng CustomUserDetailsService.loadUserByUsername() lấy UserDetails từ DB,
+            // so sánh password và trả về Authentication object nếu hợp lệ.
+            System.out.println("Username: " + username + " password: " + password);
+            
             authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (AuthenticationException exception) {
             Map<String, Object> map = new HashMap<>();
             map.put("message", "Bad credentials");
             map.put("status", false);
+            map.put("username", username); 
+            map.put("password", password);         
             return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
         }
 
@@ -81,7 +84,6 @@ public class LoginController {
         String role = userDetails.getAuthorities().stream()
                 .findFirst().map(GrantedAuthority :: getAuthority)
                 .orElse(null); 
-        
 
         LoginResponse response = new LoginResponse(userDetails.getUsername(), role, jwtToken);
 

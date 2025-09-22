@@ -6,6 +6,7 @@ package com.vietcao.E_Commerce.Project.repositories;
 
 import com.vietcao.E_Commerce.Project.entities.User;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     // Không cần viết lại, vì JpaRepository đã có sẵn findAll() rồi.
         List<User> findAll(); 
+        
+        // Optional<User> giúp tránh null và dễ xử lý khi không tìm thấy user.
+        Optional<User> findByUsername(String username);
 }

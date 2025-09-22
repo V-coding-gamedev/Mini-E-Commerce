@@ -3,18 +3,18 @@ package com.vietcao.E_Commerce.Project.jwt;
 import java.util.List;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+//@AllArgsConstructor
 public class LoginResponse {
     private String jwtToken;
 
     private String username;
     private String roles;
 
-//    public LoginResponse(String username, String roles, String jwtToken) {
-//        this.username = username;
-//        this.roles = roles;
-//        this.jwtToken = jwtToken;
-//    }
+    public LoginResponse(String username, String roles, String jwtToken) {
+        this.username = username;
+        this.roles = roles;
+        this.jwtToken = jwtToken;
+    }
 
     public String getJwtToken() {
         return jwtToken;
