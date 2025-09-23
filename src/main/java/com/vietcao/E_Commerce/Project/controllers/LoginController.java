@@ -49,15 +49,13 @@ public class LoginController {
     
     
     
-    @PostMapping("/log-in")
+    @PostMapping("/log-in") // để trả về thông tin người dùng và token 
     public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
         Authentication authentication;
         try {
             // Luồng xác thực: AuthenticationManager gọi DaoAuthenticationProvider, 
             // provider dùng CustomUserDetailsService.loadUserByUsername() lấy UserDetails từ DB,
             // so sánh password và trả về Authentication object nếu hợp lệ.
-            System.out.println("Username: " + username + " password: " + password);
-            
             authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (AuthenticationException exception) {

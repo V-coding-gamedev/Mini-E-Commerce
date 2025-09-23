@@ -80,6 +80,14 @@
             <scope>runtime</scope>
         </dependency>
         
+        <!-- Cung cấp Serializer/Deserializer cho JSON. -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId> 
+            <version>0.12.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
