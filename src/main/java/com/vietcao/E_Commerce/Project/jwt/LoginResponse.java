@@ -1,9 +1,5 @@
 package com.vietcao.E_Commerce.Project.jwt;
 
-import java.util.List;
-import lombok.AllArgsConstructor;
-
-//@AllArgsConstructor
 public class LoginResponse {
     private String jwtToken;
 

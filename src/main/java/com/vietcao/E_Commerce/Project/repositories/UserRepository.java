@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    //    chỉ viết thêm method khi muốn query đặc thù (ví dụ: findByUsername(String username)).
+        //    chỉ viết thêm method khi muốn query đặc thù (ví dụ: findByUsername(String username)).
     
-    // Không cần viết lại, vì JpaRepository đã có sẵn findAll() rồi.
+        // Không cần viết lại, vì JpaRepository đã có sẵn findAll() rồi.
         List<User> findAll(); 
         
         // Optional<User> giúp tránh null và dễ xử lý khi không tìm thấy user.
