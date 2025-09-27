@@ -9,16 +9,32 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import com.vietcao.E_Commerce.Project.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UserService {
+    @Autowired
     UserRepository userRepository; 
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
     
+    @Autowired
+    PasswordEncoder passwordEncoder; 
+    
+    /* 
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+    */ 
+      
     public List<User> getAll(){
         return userRepository.findAll(); 
+    }
+
+    public User register(String username, String password, String email) {
+        User user = new User(username, passwordEncoder.encode(password), email, "USER");
+
+        return userRepository.save(user);
     }
 }

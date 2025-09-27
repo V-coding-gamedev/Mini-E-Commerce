@@ -14,7 +14,21 @@ public class User {
     String password;
     String email; 
     String role;
+    
+    @Column(nullable = false, updatable = false, insertable = false)
     LocalDateTime created_at; 
+
+    public User() {
+    }
+
+    public User(String username, String password, String email, String role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role; 
+    }
+    
+    
 
     public long getId() {
         return id;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vietcao.E_Commerce.Project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,11 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController 
 public class UserController {
     private final UserService userService; 
-    
-    @Autowired
-    public UserRepository userRepository; 
-    
-//    public User user; 
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -42,8 +38,8 @@ public class UserController {
         return userService.getAll(); 
     }
     
-//    @PostMapping("/register")
-//    public ResponseEntity<?> authenticateUser(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
-//        
-//    }
+    @PostMapping("/register")
+    public User createNewUser (@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+        return userService.register(username, password, email); 
+    }
 }
