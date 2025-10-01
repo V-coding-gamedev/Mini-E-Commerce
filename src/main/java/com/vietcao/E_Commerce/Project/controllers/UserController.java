@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.vietcao.E_Commerce.Project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +39,19 @@ public class UserController {
         return userService.getAll(); 
     }
     
+//    @PostMapping("/register")
+//    public User createNewUser (@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+//        return userService.register(username, password, email); 
+//    }
+    
     @PostMapping("/register")
-    public User createNewUser (@RequestParam String username, @RequestParam String password, @RequestParam String email) {
-        return userService.register(username, password, email); 
+    public ResponseEntity<?> createNewUser (@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+        try {
+            User user = userService.register(username, password, email);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+//            System.out.println("Message: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

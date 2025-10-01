@@ -34,11 +34,10 @@ public class UserService {
     }
 
     public User register(String username, String password, String email) {
-        if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email already exists");
-        }
-        if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username already exists");
+        boolean isUserExist = userRepository.existsByEmail(email) || userRepository.existsByUsername(username); 
+                
+        if (isUserExist){
+            throw new RuntimeException("Email or username has already used"); 
         }
 
         User user = new User(username, passwordEncoder.encode(password), email, "USER");
