@@ -44,10 +44,7 @@ public class EncodePasswordsInDB implements CommandLineRunner {
                             ps.setString(2, user.getUsername());
 
                             int row = ps.executeUpdate(); // phương thức dùng để thực thi câu lệnh SQL kiểu update dữ liệu (INSERT, UPDATE, DELETE).
-                            System.out.println("Updated password for user " + user.getUsername() + " - Row number: " + row);
-                        } else {
-                            System.out.println("Password has already been encoded");
-                        }
+                        } 
                     } catch (Exception e) {
                         // bắt lỗi từng user để vòng lặp không dừng
                         System.err.println("Lỗi khi update user "

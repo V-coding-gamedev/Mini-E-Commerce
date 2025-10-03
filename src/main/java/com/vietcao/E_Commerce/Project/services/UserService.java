@@ -22,13 +22,6 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    /* 
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-     */
     public List<User> getAll() {
         return userRepository.findAll();
     }

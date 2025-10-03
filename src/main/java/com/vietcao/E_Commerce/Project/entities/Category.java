@@ -3,6 +3,7 @@ package com.vietcao.E_Commerce.Project.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

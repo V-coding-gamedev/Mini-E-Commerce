@@ -91,7 +91,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                     .requestMatchers("/login.html").permitAll()
                     .requestMatchers(HttpMethod.POST, "/log-in").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/register").permitAll()    
+                    .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/products").permitAll()
                     .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

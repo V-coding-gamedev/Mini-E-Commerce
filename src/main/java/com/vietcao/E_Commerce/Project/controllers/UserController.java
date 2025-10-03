@@ -39,11 +39,6 @@ public class UserController {
         return userService.getAll(); 
     }
     
-//    @PostMapping("/register")
-//    public User createNewUser (@RequestParam String username, @RequestParam String password, @RequestParam String email) {
-//        return userService.register(username, password, email); 
-//    }
-    
     @PostMapping("/register")
     public ResponseEntity<?> createNewUser (@RequestParam String username, @RequestParam String password, @RequestParam String email) {
         try {

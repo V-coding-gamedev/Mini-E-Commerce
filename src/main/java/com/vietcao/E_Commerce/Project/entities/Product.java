@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 //là một annotation trong Java (cụ thể là JPA – Java Persistence API). Nó dùng để đánh dấu một class là một thực thể (entity), tức là class đó sẽ ánh xạ (map) tới một bảng trong cơ sở dữ liệu.
 @Entity 
+@Table(name = "Products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
