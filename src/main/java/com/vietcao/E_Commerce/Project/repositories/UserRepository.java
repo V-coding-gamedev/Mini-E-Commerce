@@ -23,4 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Optional<User> giúp tránh null và dễ xử lý khi không tìm thấy user.
     Optional<User> findByUsername(String username);
+    
+    Optional<User> findById(Long Id);
 }

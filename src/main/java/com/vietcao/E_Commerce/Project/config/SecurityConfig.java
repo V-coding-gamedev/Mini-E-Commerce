@@ -1,7 +1,5 @@
 package com.vietcao.E_Commerce.Project.config;
 
-
-
 import com.vietcao.E_Commerce.Project.jwt.*; 
 import com.vietcao.E_Commerce.Project.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,41 +50,6 @@ public class SecurityConfig {
     
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        // chỉ truy cập login.html mà ko cần đăng nhập, các API khác yêu cầu đăng nhập
-        // http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-        
-//        http.authorizeHttpRequests(authorizeRequests ->
-//                authorizeRequests.requestMatchers("/login.html").permitAll()
-//                        .requestMatchers("/log-in").permitAll()
-//                        .anyRequest().authenticated());
-//       
-//        // ko lưu session trong server, mỗi request đều phải mang JWT Token (sử dụng token để kiểm tra thay vì qua session ID) 
-//        http.sessionManagement(
-//                session ->
-//                        session.sessionCreationPolicy(
-//                                SessionCreationPolicy.STATELESS)
-//        );
-//        
-//        // Nếu token sai/hết hạn → gọi unauthorizedHandler → trả về lỗi 401 Unauthorized.
-//        http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
-//        
-//        // Cho phép mở H2 console trong trình duyệt (iframe), tránh bị chặn bởi Spring Security.
-//        http.headers(headers -> headers
-//                .frameOptions(frameOptions -> frameOptions
-//                        .sameOrigin()
-//                )
-//        );
-//        
-//        // Tắt bảo vệ CSRF (Cross-Site Request Forgery), vì API JWT session + cookie
-//        http.csrf(csrf -> csrf.disable());
-//        
-//        // Tiến hành kiểm tra JWT token trước khi kiểm tra username - password
-        http.addFilterBefore(authenticationJwtTokenFilter(),
-                UsernamePasswordAuthenticationFilter.class);
-//
-//
-//        return http.build();
-
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
                     .requestMatchers("/login.html").permitAll()
@@ -101,34 +64,6 @@ public class SecurityConfig {
                 .build();
     }
     
-    
-
-    // UserDetailsService là interface trong Spring Security, dùng để tìm thông tin người dùng (username, password, roles) từ một nguồn nào đó (DB, memory, API…).
-//    @Bean
-//    public UserDetailsService userDetailsService(DataSource dataSource) {
-//        return new JdbcUserDetailsManager(dataSource); // JdbcUserDetailsManager sẽ chạy SQL dưới nền để lấy user từ bảng users và authorities (theo cấu trúc mặc định của Spring Security).
-//    }
-
-//    @Bean
-//    public CommandLineRunner initData(UserDetailsService userDetailsService) {
-//        return args -> {
-//            JdbcUserDetailsManager manager = (JdbcUserDetailsManager) userDetailsService;
-//            UserDetails user1 = User.withUsername("user1")
-//                    .password(passwordEncoder().encode("password1"))
-//                    .roles("USER")
-//                    .build();
-//            UserDetails admin = User.withUsername("admin")
-//                    //.password(passwordEncoder().encode("adminPass"))
-//                    .password(passwordEncoder().encode("adminPass"))
-//                    .roles("ADMIN")
-//                    .build();
-//
-//            JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-//            userDetailsManager.createUser(user1);
-//            userDetailsManager.createUser(admin);
-//        };
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
          return new BCryptPasswordEncoder();

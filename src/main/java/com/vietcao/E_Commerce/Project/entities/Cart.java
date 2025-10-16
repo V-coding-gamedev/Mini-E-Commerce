@@ -9,13 +9,15 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     
-    // Khai báo quan hệ Many-to-One với Category
     @OneToOne
-    @JoinColumn(name = "user_id") // cột foreign key trong bảng Product
-    User user_id; 
+    @JoinColumn(name = "user_id") 
+    User user; 
     
+    @Column(nullable = false, updatable = false, insertable = false)
     LocalDateTime created_at; 
-
+    
+    String status; 
+    
     public long getId() {
         return id;
     }
@@ -24,14 +26,15 @@ public class Cart {
         this.id = id;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
+    
     public LocalDateTime getCreated_at() {
         return created_at;
     }
@@ -39,7 +42,12 @@ public class Cart {
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
-    
-    
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

@@ -42,13 +42,6 @@ public class LoginController {
         return "Hello, User!";
     }
     
-//    @GetMapping("/log-in")
-//    public String login(){
-//        return "login.html"; 
-//    }
-    
-    
-    
     @PostMapping("/log-in") // để trả về thông tin người dùng và token 
     public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
         Authentication authentication;

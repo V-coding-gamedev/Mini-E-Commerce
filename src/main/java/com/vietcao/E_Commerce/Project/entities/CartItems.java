@@ -3,21 +3,21 @@ package com.vietcao.E_Commerce.Project.entities;
 import jakarta.persistence.*;
 
 @Entity
-public class OrderItems {
+@Table(name = "CartItems")
+public class CartItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     
     @ManyToOne
-    @JoinColumn(name = "order_id")        
-    Order order_id;
+    @JoinColumn(name = "cart_id")      
+    Cart cart;
     
     @ManyToOne
-    @JoinColumn(name = "product_id")        
-    Product product; 
+    @JoinColumn(name = "product_id")
+    Product product;
     
     long quantity; 
-    float price; 
 
     public long getId() {
         return id;
@@ -27,12 +27,12 @@ public class OrderItems {
         this.id = id;
     }
 
-    public Order getOrder_id() {
-        return order_id;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setOrder_id(Order order_id) {
-        this.order_id = order_id;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Product getProduct() {
@@ -42,9 +42,7 @@ public class OrderItems {
     public void setProduct(Product product) {
         this.product = product;
     }
-
     
-
     public long getQuantity() {
         return quantity;
     }
@@ -52,14 +50,4 @@ public class OrderItems {
     public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-    
-    
 }
