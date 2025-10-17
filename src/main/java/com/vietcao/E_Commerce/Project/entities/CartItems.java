@@ -3,7 +3,7 @@ package com.vietcao.E_Commerce.Project.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "CartItems")
+@Table(name = "cart_items", schema = "dbo")
 public class CartItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

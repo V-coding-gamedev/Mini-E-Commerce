@@ -1,10 +1,18 @@
 package com.vietcao.E_Commerce.Project.jwt;
 
 public class LoginResponse {
+    
+    private long id; 
     private String jwtToken;
-
     private String username;
     private String roles;
+
+    public LoginResponse(long id, String jwtToken, String username, String roles) {
+        this.id = id;
+        this.jwtToken = jwtToken;
+        this.username = username;
+        this.roles = roles;
+    }
 
     public LoginResponse(String username, String roles, String jwtToken) {
         this.username = username;
@@ -12,6 +20,14 @@ public class LoginResponse {
         this.jwtToken = jwtToken;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getJwtToken() {
         return jwtToken;
     }
