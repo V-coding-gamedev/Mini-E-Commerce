@@ -27,8 +27,6 @@ public class User {
         this.email = email;
         this.role = role; 
     }
-    
-    
 
     public long getId() {
         return id;
@@ -77,6 +75,4 @@ public class User {
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
-    
-    
 }
