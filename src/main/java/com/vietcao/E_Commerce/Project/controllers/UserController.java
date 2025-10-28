@@ -45,8 +45,14 @@ public class UserController {
             User user = userService.register(username, password, email);
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
-//            System.out.println("Message: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    
+    @GetMapping("/findByUsername")
+    public Long findByUsername(@RequestParam String username){
+        return userService.findByUsername(username); 
+    }
+    
+    
 }

@@ -2,6 +2,7 @@ package com.vietcao.E_Commerce.Project.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Cart {
@@ -17,6 +18,9 @@ public class Cart {
     LocalDateTime created_at; 
     
     String status; 
+    
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CartItems> cartItems;
     
     public long getId() {
         return id;
@@ -49,5 +53,13 @@ public class Cart {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<CartItems> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItems> cartItems) {
+        this.cartItems = cartItems;
     }
 }

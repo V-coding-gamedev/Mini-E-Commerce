@@ -8,6 +8,7 @@ import com.vietcao.E_Commerce.Project.repositories.CartRepository;
 import com.vietcao.E_Commerce.Project.repositories.ProductRepository;
 import com.vietcao.E_Commerce.Project.repositories.UserRepository;
 import com.vietcao.E_Commerce.Project.repositories.*;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,8 @@ public class CartService {
     @Autowired
     CartItemsRepository cartItemsRepository; 
     
-
     public Cart getOrCreateActiveCart(Long userId) {
-        User user = userRepository.findById(userId).get();;
+        User user = userRepository.findById(userId).get();
 
         return cartRepository.findByUserIdAndStatus(userId, "ACTIVE")
                 .orElseGet(() -> {
@@ -47,5 +47,11 @@ public class CartService {
         item.setProduct(product);
         item.setQuantity(quantity);
         cartItemsRepository.save(item);
+    }
+    
+    public List<CartItems> getCartItemsByUserId(Long userId) {
+        Cart cart = cartRepository.findByUserIdAndStatus(userId, "ACTIVE")
+                .orElseThrow(() -> new RuntimeException("Cart not found for user: " + userId));
+        return cart.getCartItems();
     }
 }
