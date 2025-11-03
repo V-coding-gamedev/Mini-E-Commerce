@@ -9,6 +9,7 @@ import com.vietcao.E_Commerce.Project.repositories.ProductRepository;
 import com.vietcao.E_Commerce.Project.repositories.UserRepository;
 import com.vietcao.E_Commerce.Project.repositories.*;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +42,22 @@ public class CartService {
 
     public void addProductToCart(Cart cart, Long productId, long quantity) {
         Product product = productRepository.findById(productId).get();
-
-        CartItems item = new CartItems();
-        item.setCart(cart);
-        item.setProduct(product);
-        item.setQuantity(quantity);
-        cartItemsRepository.save(item);
+        
+        Optional<CartItems> existingItem = cartItemsRepository.findByCartAndProduct(cart, product);
+        
+        if (existingItem.isPresent()){
+            // Nếu đã tồn tại => cộng thêm số 1
+            CartItems cartItems = existingItem.get(); 
+            cartItems.setQuantity(cartItems.getQuantity() + 1);
+            cartItemsRepository.save(cartItems); 
+        } else {
+            // Nếu chưa có => tạo mới
+            CartItems item = new CartItems();
+            item.setCart(cart);
+            item.setProduct(product);
+            item.setQuantity(quantity);
+            cartItemsRepository.save(item);
+        }
     }
     
     public List<CartItems> getCartItemsByUserId(Long userId) {
