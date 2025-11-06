@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "orders") 
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,8 @@ public class Order {
     
     float totalPrice; 
     String status; 
+    
+    @Column(nullable = false, updatable = false, insertable = false)
     LocalDateTime created_at; 
 
     public long getId() {
