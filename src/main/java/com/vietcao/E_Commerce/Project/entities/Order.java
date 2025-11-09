@@ -12,7 +12,7 @@ public class Order {
     
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user_id; 
+    User user; 
     
     float totalPrice; 
     String status; 
@@ -28,13 +28,15 @@ public class Order {
         this.id = id;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    
 
     public float getTotalPrice() {
         return totalPrice;

@@ -1,6 +1,7 @@
 package com.vietcao.E_Commerce.Project.controllers;
 
 import com.vietcao.E_Commerce.Project.dtos.OrderItemsResponse;
+import com.vietcao.E_Commerce.Project.entities.Order;
 import com.vietcao.E_Commerce.Project.services.CartService;
 import com.vietcao.E_Commerce.Project.services.OrderService;
 import java.util.List;
@@ -23,29 +24,16 @@ public class OrderController {
         this.cartService = cartService;
         this.orderService = orderService; 
     }
-
-    // @PathVariable lấy giá trị động từ URL (vd: /api/cart/5 → userId = 5)
-//    @GetMapping("/confirmOrder/{userId}")
-//    public List<OrderItemsResponse> confirmOrder(@PathVariable Long userId) {
-//        List<OrderItemsResponse> orderItems = cartService.getCartItemsByUserId(userId)
-//                .stream()
-//                .map(item -> new OrderItemsResponse(
-//                item.getCart().getId(),
-//                item.getProduct().getId(),
-//                item.getProduct().getName(),
-//                item.getQuantity(),
-//                item.getProduct().getPrice()
-//        )).toList();
-//        
-//        double totalPrice = calculateTotalPrice(orderItems); 
-//
-//        return orderItems;
-//    }
-//
+    
+    @GetMapping("/getOrder")
+    private List<Order> getOrder(@RequestParam Long userId){
+        return orderService.getOrder(userId); 
+    }
+    
     
     // @PathVariable lấy giá trị động từ URL (vd: /api/cart/5 → userId = 5)
-    @GetMapping("/confirmOrder/{userId}")
-    private double getTotalOrderPrice(@PathVariable Long userId){
+    @PostMapping("/confirmOrder/{userId}")
+    private double confirmOrderAndGetTotalPrice(@PathVariable Long userId){
         List<OrderItemsResponse> orderItems = cartService.getCartItemsByUserId(userId)
                 .stream()
                 .map(item -> new OrderItemsResponse(
@@ -58,25 +46,16 @@ public class OrderController {
         
         double totalPrice = computeTotalPrice(orderItems); 
         
-        addOrder(userId, totalPrice); 
+        createOrUpdateOrder(userId, totalPrice); 
 
         return totalPrice;
     }
     
-    private void addOrder(Long userId, double totalPrice){
-        orderService.createOrder(userId, totalPrice);
+    private void createOrUpdateOrder(Long userId, double totalPrice){
+        orderService.createOrUpdatePendingOrder(userId, totalPrice);
     }
 
     private double computeTotalPrice(List<OrderItemsResponse> orderItems) {
-        double totalPrice = 0;
-        double subPrice = 0;
-
-        for (int i = 0; i < orderItems.size(); i++) {
-            OrderItemsResponse item = orderItems.get(i);
-            subPrice = item.quantity() * item.price();
-            totalPrice += subPrice;
-        }
-
-        return totalPrice;
+        return orderService.computeTotalPrice(orderItems); 
     }
 }
